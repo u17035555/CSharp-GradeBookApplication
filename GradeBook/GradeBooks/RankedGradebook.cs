@@ -4,9 +4,9 @@ using System.Text;
 
 namespace GradeBook.GradeBooks
 {
-    class RankedGradebook : BaseGradeBook
+    class RankedGradeBook : BaseGradeBook
     {
-        public RankedGradebook(string name) : base(name)
+        public RankedGradeBook(string name) : base(name)
         {
             Type = Enums.GradeBookType.Ranked;
         }
