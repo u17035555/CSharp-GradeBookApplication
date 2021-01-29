@@ -12,7 +12,7 @@ namespace GradeBook.GradeBooks
 
         public override char GetLetterGrade(double averageGrade)
         {
-            if (Students.Count < 5)
+            if (!AreEnoughStudents())
             {
                 throw new InvalidOperationException();
             }
@@ -48,12 +48,49 @@ namespace GradeBook.GradeBooks
         {
             try
             {
-                return (GetRanking(averageGrade) / (double) Students.Count) * 100;
+                return (GetRanking(averageGrade) / (double)Students.Count) * 100;
             }
             catch (DivideByZeroException)
             {
                 throw new InvalidOperationException();
             }
+        }
+
+        public override void CalculateStatistics()
+        {
+            if (!AreEnoughStudents())
+            {
+                DisplayNotEnoughStudentsErrorMessage();
+                return;
+            }
+
+            base.CalculateStatistics();
+        }
+
+        public override void CalculateStudentStatistics(string name)
+        {
+            if (!AreEnoughStudents())
+            {
+                DisplayNotEnoughStudentsErrorMessage();
+                return;
+            }
+
+            base.CalculateStudentStatistics(name);
+        }
+
+        public bool AreEnoughStudents()
+        {
+            if (Students.Count < 5) 
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public void DisplayNotEnoughStudentsErrorMessage()
+        {
+            Console.WriteLine("Ranked grading requires at least 5 students with grades in order to properly calculate a student's overall grade.");
         }
     }
 }
